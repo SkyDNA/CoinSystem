@@ -22,6 +22,14 @@ class Commands implements CommandExecutor{
                         $sender->sendMessage("Usage: /coins set <player> <coins>");
                         }
                     break;
+                case "remove":
+                    if(!empty($args[1]) && !empty($args[2])){
+                        API::removeCoins($args[1], intval($args[2]))
+                        $sender->sendMessage("§c".$player." havn't ".$args[2]." coins")
+                    }else{
+                        $sender->sendMessage("Usage: /coins remove <player> <coins>");
+                        }
+                    break;
                     
             }
             return true;
