@@ -3,7 +3,7 @@ namespace CoinSystem;
 
 class Commands implements CommandExecutor{
     
-    public void onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool{
+    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool{
         if($cmd->getName() == "coins"){
             switch($args[0]){
                 case "add":
