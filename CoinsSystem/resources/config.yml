@@ -10,13 +10,17 @@
 #Language of the Plugin: only supportet eng
 language: eng
 
-#Choose which type of Provider you want to use: only supported mysql
-provider: mysql
+#Choose which type of Provider you want to use: only supported mysql, sqlite3
+provider: sqlite3
 
 
 #MySQl Connection Options
-MySQL:
+mysql:
     host: "example.net:3306"
     username: "YourUser"
     password: "password123"
     password: "CoinSystem"
+
+#SQlite3 Connection Options
+sqlite3:
+    path: "/home"

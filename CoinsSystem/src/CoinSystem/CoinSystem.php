@@ -4,6 +4,7 @@ namespace CoinSystem;
 
 use CoinSystem\Commands\CommandCoins;
 use CoinSystem\Provider\MySQLDataProvider;
+use CoinSystem\Provider\SQLite3DataProvider;
 use pocketmine\lang\BaseLang;
 use pocketmine\plugin\PluginBase;
 
@@ -30,6 +31,8 @@ class CoinSystem extends PluginBase {
 
         if ($this->getConfig()->get("provider") == "mysql") {
             $this->provider = new MySQLDataProvider($this->getConfig()->getNested("mysql.host"), $this->getConfig()->getNested("mysql.username"), $this->getConfig()->getNested("mysql.password"), $this->getConfig()->getNested("mysql.password"));
+        } elseif ($this->getConfig()->get("provider") == "sqlite3") {
+            $this->provider = new SQLite3DataProvider($this->getConfig()->getNested("sqlite3.path"));
         } else {
             //Comming Soon
             return;
