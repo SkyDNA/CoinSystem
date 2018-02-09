@@ -4,7 +4,7 @@ namespace CoinSystem;
 use pocketmine\lang\BaseLang;
 use pocketmine\plugin\PluginBase;
 
-class coinsystem extends PluginBase {
+class CoinSystem extends PluginBase {
 
     const PREFIX = "§7[§eCoinSystem§7] ";
 

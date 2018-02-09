@@ -2,4 +2,4 @@ name: CoinSystem
 author: [McpeBooster, StuckDexter]
 version: 1.0
 api: 3.0.0-ALPHA10
-main: CoinSystem/coinsystem
+main: CoinSystem/CoinSystem
