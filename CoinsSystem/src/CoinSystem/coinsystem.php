@@ -3,6 +3,7 @@ namespace CoinSystem;
 
 use pocketmine\lang\BaseLang;
 use pocketmine\plugin\PluginBase;
+use CoinSystem\Commands;
 
 class coinsystem extends PluginBase {
 
@@ -11,6 +12,8 @@ class coinsystem extends PluginBase {
     public function onEnable() {
 
         $this->getLogger()->info(self::PREFIX . "by §6McpeBooster §7and §6StuckDexter§7!");
+        
+        new Commands();
 
         $this->saveDefaultConfig();
 
@@ -26,4 +29,6 @@ class coinsystem extends PluginBase {
     public function getLanguage(): BaseLang {
         return $this->baseLang;
     }
+    
+    
 }

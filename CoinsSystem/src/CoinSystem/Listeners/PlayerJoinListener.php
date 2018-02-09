@@ -1,4 +1,5 @@
 <?php
+namespace CoinSystem\Listener;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;

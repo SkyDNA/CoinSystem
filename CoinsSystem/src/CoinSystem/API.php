@@ -18,6 +18,7 @@ class API{
     public static function addCoins(string $player){
         
     }
+    
 }
 
 ?>
