@@ -8,16 +8,11 @@
 
 namespace CoinSystem\Provider;
 
-
-use CoinSystem\CoinSystem;
-
 class MySQLDataProvider {
 
-    private $plugin;
     public $database;
 
     public function __construct($host, $username, $password, $database){
-        $this->plugin = CoinSystem::getInstance();
         $this->database = new \mysqli($host, $username, $password, $database);
 
         if ($this->database->connect_error) {
@@ -31,6 +26,39 @@ class MySQLDataProvider {
 		)");
     }
 
+    public function addPlayer(string $name) {
+        $name = trim(strtolower($name));
+        $this->database->query("INSERT INTO coinsystem (name, coins) VALUES ('" . $name . "', '0')");
+        return true;
+    }
+
+    public function getCoins(string $name) {
+        $name = trim(strtolower($name));
+        $result = $this->database->query("SELECT * FROM coinsystem WHERE name = '$name'");
+
+        if ($result instanceof \mysqli_result) {
+            $data = $result->fetch_assoc();
+            $result->free();
+            if (isset($data["name"]) and $data["name"] === $name) {
+                return $data["coins"];
+            }
+        }
+        return 0;
+    }
+
+    public function setCoins(string $name, int $coins) {
+        return $this->database->query("UPDATE coinsystem SET coins = '$coins' WHERE name = '$name'");
+    }
+
+    public function addCoins(string $name, int $coins) {
+        $newcoins = $coins + $this->getCoins($name);
+        return $this->database->query("UPDATE coinsystem SET coins = '$newcoins' WHERE name = '$name'");
+    }
+
+    public function removeCoins(string $name, int $coins) {
+        $newcoins = $coins - $this->getCoins($name);
+        return $this->database->query("UPDATE coinsystem SET coins = '$newcoins' WHERE name = '$name'");
+    }
     public function close() {
         $this->database->close();
     }

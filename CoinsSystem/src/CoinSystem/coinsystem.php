@@ -1,10 +1,11 @@
 <?php
+
 namespace CoinSystem;
 
+use CoinSystem\Commands\CommandCoins;
 use CoinSystem\Provider\MySQLDataProvider;
 use pocketmine\lang\BaseLang;
 use pocketmine\plugin\PluginBase;
-use CoinSystem\Commands;
 
 class CoinSystem extends PluginBase {
 
@@ -17,8 +18,6 @@ class CoinSystem extends PluginBase {
 
         $this->getLogger()->info(self::PREFIX . "by §6McpeBooster §7and §6StuckDexter§7!");
         self::$instance = $this;
-        
-        new Commands();
 
         $this->saveDefaultConfig();
 
@@ -27,20 +26,25 @@ class CoinSystem extends PluginBase {
 
         $this->getLogger()->info(self::PREFIX . "Language: " . $lang);
 
-        if($this->getConfig()->get("provider") == "mysql"){
+        $this->getServer()->getCommandMap()->register("CoinSystem", new CommandCoins($this));
+
+        if ($this->getConfig()->get("provider") == "mysql") {
             $this->provider = new MySQLDataProvider($this->getConfig()->getNested("mysql.host"), $this->getConfig()->getNested("mysql.username"), $this->getConfig()->getNested("mysql.password"), $this->getConfig()->getNested("mysql.password"));
-        }else{
+        } else {
             //Comming Soon
             return;
         }
     }
 
-    public function onDisable(){
-        if(is_null($this->provider))
+    public function onDisable() {
+        if (is_null($this->provider))
             $this->provider->close();
     }
 
-    public static function getInstance(){
+    /**
+     * @return mixed
+     */
+    public static function getInstance() {
         return self::$instance;
     }
 
@@ -50,6 +54,50 @@ class CoinSystem extends PluginBase {
     public function getLanguage(): BaseLang {
         return $this->baseLang;
     }
-    
-    
+
+    //API
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public static function addPlayer(string $name) {
+        return self::$instance->provider->addPlayer($name);
+    }
+
+    /**
+     * @param string $name
+     * @return int
+     */
+    public static function getCoins(string $name): int {
+        return self::$instance->provider->getCoins($name);
+    }
+
+    /**
+     * @param string $name
+     * @param int $coins
+     * @return mixed
+     */
+    public static function setCoins(string $name, int $coins) {
+        return self::$instance->provider->setCoins($name, $coins);
+    }
+
+    /**
+     * @param string $name
+     * @param int $coins
+     * @return mixed
+     */
+    public static function addCoins(string $name, int $coins) {
+        return self::$instance->provider->addCoins($name, $coins);
+    }
+
+    /**
+     * @param string $name
+     * @param int $coins
+     * @return mixed
+     */
+    public static function removeCoins(string $name, int $coins) {
+        return self::$instance->provider->removeCoins($name, $coins);
+    }
+
 }
