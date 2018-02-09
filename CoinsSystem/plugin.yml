@@ -7,3 +7,4 @@ commands:
   coins:
     description: Main Coins Command
     aliases: c
+    usage: /coins
