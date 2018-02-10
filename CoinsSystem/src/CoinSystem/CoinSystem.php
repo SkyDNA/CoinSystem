@@ -3,6 +3,7 @@
 namespace CoinSystem;
 
 use CoinSystem\Commands\CommandCoins;
+use CoinSystem\Listener\PlayerJoinListener;
 use CoinSystem\Provider\MySQLDataProvider;
 use CoinSystem\Provider\SQLite3DataProvider;
 use pocketmine\lang\BaseLang;
@@ -37,10 +38,19 @@ class CoinSystem extends PluginBase {
             //Comming Soon
             return;
         }
+
+        $this->getLogger()->info(self::PREFIX . "Provider: " . $this->getConfig()->get("provider"));
+
+        $this->getServer()->getPluginManager()->registerEvents(new PlayerJoinListener(), $this);
+
+        var_dump(CoinSystem::getCoins("test"));
+        if(!CoinSystem::getCoins("test")){
+            CoinSystem::addPlayer("test");
+        }
     }
 
     public function onDisable() {
-        if (is_null($this->provider))
+        if (isset($this->provider) && !is_null($this->provider))
             $this->provider->close();
     }
 
@@ -70,9 +80,9 @@ class CoinSystem extends PluginBase {
 
     /**
      * @param string $name
-     * @return int
+     * @return mixed
      */
-    public static function getCoins(string $name): int {
+    public static function getCoins(string $name) {
         return self::$instance->provider->getCoins($name);
     }
 

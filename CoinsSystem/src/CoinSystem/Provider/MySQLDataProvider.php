@@ -60,7 +60,7 @@ class MySQLDataProvider {
 
     /**
      * @param string $name
-     * @return int
+     * @return bool|int
      */
     public function getCoins(string $name) {
         $name = trim(strtolower($name));
@@ -70,10 +70,10 @@ class MySQLDataProvider {
             $data = $result->fetch_assoc();
             $result->free();
             if (isset($data["name"]) and $data["name"] === $name) {
-                return $data["coins"];
+                return (int) $data["coins"];
             }
         }
-        return 0;
+        return false;
     }
 
     /**

@@ -13,11 +13,11 @@ class SQLite3DataProvider {
     public function __construct(string $path) {
 
         define('SQLITE3_OPEN_SHAREDCACHE', 0x00020000);
-        if (!file_exists($path . "/coinsystem.db")) {
-            $this->sqlite3 = new \SQLite3($path . "/coinsystem.db", SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE | SQLITE3_OPEN_SHAREDCACHE);
-            $this->sqlite3->exec('CREATE TABLE coinsystem (name TEXT PRIMARY KEY, coins INTEGER NOT)');
+        if (!file_exists($path)) {
+            $this->sqlite3 = new \SQLite3($path, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE | SQLITE3_OPEN_SHAREDCACHE);
+            $this->sqlite3->exec('CREATE TABLE coinsystem (name TEXT PRIMARY KEY, coins INTEGER NOT NULL)');
         } else {
-            $this->sqlite3 = new \SQLite3($path . "/coinsystem.db", SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_SHAREDCACHE);
+            $this->sqlite3 = new \SQLite3($path, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_SHAREDCACHE);
         }
         $this->sqlite3->busyTimeout(5000);
     }
@@ -36,7 +36,7 @@ class SQLite3DataProvider {
 
     /**
      * @param string $name
-     * @return int
+     * @return bool|int
      */
     public function getCoins(string $name) {
         $name = trim(strtolower($name));
@@ -50,11 +50,11 @@ class SQLite3DataProvider {
             if(isset($data["name"]) and $data["name"] === $name){
                 unset($data["name"]);
                 $prepare->close();
-                return $data["coins"];
+                return (int) $data["coins"];
             }
         }
         $prepare->close();
-        return 0;
+        return false;
     }
 
     /**

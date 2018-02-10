@@ -1,5 +1,5 @@
 name: CoinSystem
-main: CoinSystem/CoinSystem
+main: CoinSystem\CoinSystem
 version: 1.0.0
 api: 3.0.0-ALPHA10
 author: [McpeBooster, StuckDexter]

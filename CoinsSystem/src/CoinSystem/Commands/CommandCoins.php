@@ -22,8 +22,7 @@ class CommandCoins extends Command {
         switch ($args[0]) {
             case "get":
                 if (!empty($args[1])) {
-                    CoinSystem::getCoins($args[1]);
-                    $sender->sendMessage(CoinSystem::PREFIX . str_replace("{coins}", $args[2], str_replace("{player}", $args[1], CoinSystem::getInstance()->getLanguage()->get("coins.get"))));
+                    $sender->sendMessage(CoinSystem::PREFIX . str_replace("{coins}", CoinSystem::getCoins($args[1]), str_replace("{player}", $args[1], CoinSystem::getInstance()->getLanguage()->get("coins.get"))));
                 } else {
                     $sender->sendMessage('Usage: /coins get <player>');
                 }

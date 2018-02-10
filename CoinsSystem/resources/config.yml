@@ -22,4 +22,4 @@ mysql:
 
 #SQlite3 Connection Options
 sqlite3:
-    path: "/home"
+    path: "/home/coinsystem.db"
