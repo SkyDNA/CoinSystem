@@ -13,13 +13,12 @@ language: eng
 #Choose which type of Provider you want to use: only supported mysql, sqlite3
 provider: sqlite3
 
-
 #MySQl Connection Options
 mysql:
     host: "example.net:3306"
     username: "YourUser"
     password: "password123"
-    password: "CoinSystem"
+    database: "CoinSystem"
 
 #SQlite3 Connection Options
 sqlite3:
